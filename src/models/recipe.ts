@@ -21,7 +21,7 @@ const authorSchema = {
 const recipeSchema = new Schema({
   title: { type: String, required: true, default: 'New recipe', trim: true },
   description: { type: String, required: true, default: 'Description of the new recipe', trim: true },
-  ingredients: [ingredientsSchema],
+  ingredients: [Object],
   steps: { type: String, required: true, default: 'Steps of the new recipe', trim: true },
   cookingTime: { type: Number, default: 0 },
   temperatureCategory: { type: Number, default: 0, enum: temperatureCategoryType },

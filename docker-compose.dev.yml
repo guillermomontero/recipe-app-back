@@ -1,6 +1,15 @@
 version: "3.7"
 
 services:
+  # MongoDB service
+  mongodb:
+    container_name: recipeappdatabase
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongodb:/data/db
+
+  # Node API service
   api:
     container_name: recipeapiapp
     restart: always
@@ -12,11 +21,14 @@ services:
       - /usr/src/app/node_modules
     ports:
       - 4000:3000
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongodb:27017
+      DB_NAME: recipe_db
+      NAME: gumodev
     command: npm run dev
-    links:
+    depends_on:
       - mongodb
-  mongodb:
-    container_name: recipeappdatabase
-    image: mongo
-    ports:
-      - "27018:27017"  
+
+volumes:
+  mongodb: {}
