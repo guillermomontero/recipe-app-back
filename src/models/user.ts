@@ -1,7 +1,5 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const uniqueValidator = require('mongoose-unique-validator');
+import { Schema, model } from 'mongoose';
+import uniqueValidator from 'mongoose-unique-validator';
 
 const roles = {
   values: ['ADMIN', 'USER'],
@@ -22,7 +20,6 @@ const userSchema = new Schema({
     zipcode: { type: Number, default: 10000 }
   },
   imageProfile: { type: String, default: '' },
-  children: [{ type: Schema.Types.ObjectId, ref: 'Children' }],
   premium: { type: Boolean, default: false },
   cardNumber: { type: Number, default: null },
   cardExpires: { type: Number, default: null },
@@ -35,9 +32,6 @@ const userSchema = new Schema({
   allowTerms: { type: Boolean, default: true },
   notifications: {
     notifications: { type: Boolean, default: false },
-    notifyEvent: { type: Boolean, default: false },
-    notifyBirthmonth: { type: Boolean, default: false },
-    notifyBirthdate: { type: Boolean, default: false },
     notifyVersion: { type: Boolean, default: false },
   },
   active: { type: Boolean, default: true }
@@ -52,8 +46,5 @@ userSchema.methods.toJSON = function() {
 };
 
 // Convert to model
-const User = mongoose.model('User', userSchema);
-
-module.exports = {
-  User,
-};
+// Convert to model
+export default model('User', userSchema);

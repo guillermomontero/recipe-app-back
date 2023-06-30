@@ -6,10 +6,10 @@ const temperatureCategoryType = {
   message: '{VALUE} - Temperature type is invalid'
 }
 
-const ingredientsSchema = {
-  name: { type: String, default: '', trim: true },
-  amount: { type: Number, default: 0 },
-};
+// const ingredientsSchema = {
+//   name: { type: String, default: '', trim: true },
+//   amount: { type: Number, default: 0 },
+// };
 
 const authorSchema = {
   id: { type: Number, default: 1 },
@@ -18,14 +18,31 @@ const authorSchema = {
   role: { type: Number, default: 0 },
 };
 
-const recipeSchema = new Schema({
+interface IRecipe {
+  title: String,
+  description: String,
+  ingredients: Object[],
+  steps: String,
+  cookingTime: Number,
+  temperatureCategory: Number,
+  categories: Object[],
+  origin: String,
+  photo: String,
+  author: Object,
+  createDate: Date,
+  active: Boolean,
+  likes: Number,
+  score: Number,
+};
+
+const recipeSchema = new Schema<IRecipe>({
   title: { type: String, required: true, default: 'New recipe', trim: true },
   description: { type: String, required: true, default: 'Description of the new recipe', trim: true },
   ingredients: [Object],
   steps: { type: String, required: true, default: 'Steps of the new recipe', trim: true },
   cookingTime: { type: Number, default: 0 },
   temperatureCategory: { type: Number, default: 0, enum: temperatureCategoryType },
-  categories: { type: Array, default: [] },
+  categories: [Object],
   origin: { type: String, default: '', trim: true },
   photo: { type: String, default: '', trim: true },
   author: authorSchema,
