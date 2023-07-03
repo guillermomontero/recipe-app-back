@@ -46,5 +46,4 @@ userSchema.methods.toJSON = function() {
 };
 
 // Convert to model
-// Convert to model
 export default model('User', userSchema);
