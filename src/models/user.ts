@@ -1,6 +1,3 @@
-import { Schema, model } from 'mongoose';
-import uniqueValidator from 'mongoose-unique-validator';
-
 const roles = {
   values: ['ADMIN', 'USER'],
   message: '{VALUE} - The role is not valid'
@@ -45,5 +42,67 @@ userSchema.methods.toJSON = function() {
   return obj;
 };
 
-// Convert to model
-export default model('User', userSchema);
+
+import { prop, getModelForClass } from '@typegoose/typegoose';
+
+class User {
+  @prop({ required: true, default: 'No name', trim: true })
+  name: string
+
+  @prop()
+  lastName: string
+
+  @prop()
+  email: string
+
+  @prop()
+  telephone: number
+
+  @prop()
+  birthDate: Date
+
+  @prop()
+  location: Object
+
+  @prop()
+  imageProfile: string
+
+  @prop()
+  premium: boolean
+
+  @prop()
+  cardNumber: number
+
+  @prop()
+  cardExpires: number
+
+  @prop()
+  entryDate: Date
+
+  @prop()
+  leavingDate: Date
+
+  @prop()
+  lastSession: Date
+
+  @prop()
+  password: string
+
+  @prop()
+  role: number
+
+  @prop()
+  allowEmail: boolean
+
+  @prop()
+  allowTerms: boolean
+
+  @prop()
+  notifications: Object
+
+  @prop()
+  active: boolean
+};
+
+const UserModel = getModelForClass(User);
+export default UserModel;
