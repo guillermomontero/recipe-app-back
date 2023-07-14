@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import User from '../models/user';
+import Category from '../models/category';
 import _ from 'underscore';
 
 const router = Router();
 
-router.get('/users', async (req, res) => {
+router.get('/categories', async (req, res) => {
   try {
-    const usersDB = await User.find();
+    const categoriesDB = await Category.find();
     
-    res.send(usersDB);
+    res.send(categoriesDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -17,14 +17,14 @@ router.get('/users', async (req, res) => {
   }
 });
 
-router.post('/users', async (req, res) => {
+router.post('/categories', async (req, res) => {
   const payload = req.body;
 
   try {
-    const userDB = new User(payload);
-    await userDB.save();
+    const categoryDB = new Category(payload);
+    await categoryDB.save();
     
-    res.json(userDB);
+    res.json(categoryDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -33,12 +33,12 @@ router.post('/users', async (req, res) => {
   }
 });
 
-router.get('/users/:id', async (req, res) => {
+router.get('/categories/:id', async (req, res) => {
   const _id = req.params.id;
 
   try {
-    const userDB = await User.find({ _id });
-    res.json(userDB);
+    const categoryDB = await Category.find({ _id });
+    res.json(categoryDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -47,14 +47,14 @@ router.get('/users/:id', async (req, res) => {
   }
 });
 
-router.delete('/users/:id', async (req, res) => {
+router.delete('/categories/:id', async (req, res) => {
   const _id = req.params.id;
 
   try {
-    await User.findByIdAndDelete({ _id });
-    const usersDB = await User.find();
+    await Category.findByIdAndDelete({ _id });
+    const categoriesDB = await Category.find();
 
-    res.json(usersDB);
+    res.json(categoriesDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -63,27 +63,17 @@ router.delete('/users/:id', async (req, res) => {
   }
 });
 
-router.put('/users/:id', async (req, res) => {
+router.put('/categories/:id', async (req, res) => {
   const _id = req.params.id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
     'name',
-    'lastName',
-    'email',
-    'telephone',
-    'location',
-    'imageProfile',
-    'cardNumber',
-    'cardExpires',
-    'password',
-    'allowEmail',
-    'notifications'
   ]);
 
   try {
-    const userDB = await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    const categoryBD = await Category.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
 
-    res.json(userDB);
+    res.json(categoryBD);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',

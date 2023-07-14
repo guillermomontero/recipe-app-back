@@ -1,6 +1,6 @@
-import { prop, getModelForClass } from '@typegoose/typegoose';
+import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
 import { Ingredient } from './ingredient';
-import User from './user';
+import { User } from './user';
 
 class Recipe {
   @prop({ required: true, default: 'New recipe', trim: true })
@@ -21,8 +21,8 @@ class Recipe {
   @prop({ default: 0 })
   temperatureCategory: number
 
-  @prop()
-  categories: object[]
+  @prop({ default: () => [] })
+  categories: number[]
 
   @prop({ default: '', trim: true })
   origin: string
@@ -30,7 +30,7 @@ class Recipe {
   @prop({ default: '', trim: true })
   photo: string
 
-  @prop()
+  @prop({ ref: () => User })
   author: Ref<User>
 
   @prop({ default: Date.now() })

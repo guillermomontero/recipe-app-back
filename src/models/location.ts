@@ -8,7 +8,7 @@ import { modelOptions, prop } from "@typegoose/typegoose"
 
 export class Location {
   @prop({ default: '', trim: true })
-  adress: string
+  address: string
 
   @prop({ default: '', trim: true })
   city: string
@@ -20,5 +20,5 @@ export class Location {
   country: string
 
   @prop({ default: 0 })
-  zipcode: number
+  postCode: number
 };

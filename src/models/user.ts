@@ -8,7 +8,7 @@ enum Role {
   USER = '2'
 }
 
-class User {
+export class User {
   @prop({ required: [true, 'Name is required'], trim: true })
   name: string
 

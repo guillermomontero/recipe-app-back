@@ -11,7 +11,7 @@ export class Ingredient {
   name: string
 
   @prop({ default: '', trim: true })
-  description: string
+  type: string
 
   @prop({ default: 0 })
   amount: number
