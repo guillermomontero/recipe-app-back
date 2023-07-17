@@ -1,10 +1,8 @@
-import { Router } from 'express';
-import Category from '../models/category';
+import { Request, Response } from 'express';
+import Category from '../models/category.model';
 import _ from 'underscore';
 
-const router = Router();
-
-router.get('/categories', async (req, res) => {
+export const getAllCategories = async (req: Request, res: Response) => {
   try {
     const categoriesDB = await Category.find();
     
@@ -15,9 +13,9 @@ router.get('/categories', async (req, res) => {
       error,
     });
   }
-});
+};
 
-router.post('/categories', async (req, res) => {
+export const createCategory = async (req: Request, res: Response) => {
   const payload = req.body;
 
   try {
@@ -31,9 +29,9 @@ router.post('/categories', async (req, res) => {
       error,
     });
   }
-});
+};
 
-router.get('/categories/:id', async (req, res) => {
+export const getCategory = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
@@ -45,9 +43,9 @@ router.get('/categories/:id', async (req, res) => {
       error,
     });
   }
-});
+};
 
-router.delete('/categories/:id', async (req, res) => {
+export const deleteCategory = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
@@ -61,9 +59,9 @@ router.delete('/categories/:id', async (req, res) => {
       error,
     })
   }
-});
+};
 
-router.put('/categories/:id', async (req, res) => {
+export const editCategory = async (req: Request, res: Response) => {
   const _id = req.params.id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
@@ -71,15 +69,13 @@ router.put('/categories/:id', async (req, res) => {
   ]);
 
   try {
-    const categoryBD = await Category.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    const categoryDB = await Category.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
 
-    res.json(categoryBD);
+    res.json(categoryDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
       error,
     })
   }
-});
-
-export default router;
+};

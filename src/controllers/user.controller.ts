@@ -1,12 +1,13 @@
-import { Router } from 'express';
-import User from '../models/user';
+import { Request, Response } from "express";
+import bcrypt from 'bcrypt';
 import _ from 'underscore';
+import User from '../models/user.model';
 
-const router = Router();
+const saltRounds = 10;
 
-router.get('/users', async (req, res) => {
+export const getAllUSers = async (req: Request, res: Response) => {
   try {
-    const usersDB = await User.find();
+    const usersDB = await User.find({}, { password: 0, cardNumber: 0, cardExpires: 0 });
     
     res.send(usersDB);
   } catch (error) {
@@ -15,29 +16,30 @@ router.get('/users', async (req, res) => {
       error,
     });
   }
-});
+};
 
-router.post('/users', async (req, res) => {
+export const createUser = async (req: Request, res: Response) => {
   const payload = req.body;
+  payload.password = bcrypt.hashSync(req.body.password, saltRounds);
 
   try {
     const userDB = new User(payload);
     await userDB.save();
-    
-    res.json(userDB);
+
+    res.json(userDB)
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
       error,
-    });
+    })
   }
-});
+};
 
-router.get('/users/:id', async (req, res) => {
+export const getUser = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
-    const userDB = await User.find({ _id });
+    const userDB = await User.find({ _id }, { password: 0, cardNumber: 0, cardExpires: 0 });
     res.json(userDB);
   } catch (error) {
     return res.status(400).json({
@@ -45,9 +47,9 @@ router.get('/users/:id', async (req, res) => {
       error,
     });
   }
-});
+};
 
-router.delete('/users/:id', async (req, res) => {
+export const deleteUser = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
@@ -61,9 +63,9 @@ router.delete('/users/:id', async (req, res) => {
       error,
     })
   }
-});
+};
 
-router.put('/users/:id', async (req, res) => {
+export const editUser = async (req: Request, res: Response) => {
   const _id = req.params.id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
@@ -90,6 +92,4 @@ router.put('/users/:id', async (req, res) => {
       error,
     })
   }
-});
-
-export default router;
+};

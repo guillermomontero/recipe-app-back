@@ -1,7 +1,7 @@
 
 import { prop, getModelForClass } from '@typegoose/typegoose';
-import { Location } from './location';
-import { Notification } from './notification';
+import { Location } from './location.model';
+import { Notification } from './notification.model';
 
 enum Role {
   ADMIN = '1',

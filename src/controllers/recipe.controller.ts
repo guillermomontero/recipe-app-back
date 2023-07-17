@@ -1,10 +1,8 @@
-import { Router } from 'express';
-import Recipe from '../models/recipe';
+import { Request, Response } from "express";
+import Recipe from '../models/recipe.model';
 import _ from 'underscore';
 
-const router = Router();
-
-router.get('/recipes', async (req, res) => {
+export const getAllRecipes = async (req: Request, res: Response) => {
   try {
     const recipesDB = await Recipe.find();
     
@@ -15,9 +13,9 @@ router.get('/recipes', async (req, res) => {
       error,
     });
   }
-});
+};
 
-router.post('/recipes', async (req, res) => {
+export const createRecipe = async (req: Request, res: Response) => {
   const payload = req.body;
 
   try {
@@ -31,9 +29,9 @@ router.post('/recipes', async (req, res) => {
       error,
     });
   }
-});
+};
 
-router.get('/recipes/:id', async (req, res) => {
+export const getRecipe = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
@@ -45,9 +43,9 @@ router.get('/recipes/:id', async (req, res) => {
       error,
     });
   }
-});
+};
 
-router.delete('/recipes/:id', async (req, res) => {
+export const deleteRecipe = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
@@ -61,9 +59,9 @@ router.delete('/recipes/:id', async (req, res) => {
       error,
     })
   }
-});
+};
 
-router.put('/recipes/:id', async (req, res) => {
+export const editRecipe = async (req: Request, res: Response) => {
   const _id = req.params.id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
@@ -79,15 +77,13 @@ router.put('/recipes/:id', async (req, res) => {
   ]);
 
   try {
-    const recipeBD = await Recipe.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    const recipeDB = await Recipe.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
 
-    res.json(recipeBD);
+    res.json(recipeDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
       error,
     })
   }
-});
-
-export default router;
+};

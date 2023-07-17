@@ -1,6 +1,6 @@
 import { prop, getModelForClass, Ref } from '@typegoose/typegoose';
-import { Ingredient } from './ingredient';
-import { User } from './user';
+import { Ingredient } from './ingredient.model';
+import { User } from './user.model';
 
 class Recipe {
   @prop({ required: true, default: 'New recipe', trim: true })
