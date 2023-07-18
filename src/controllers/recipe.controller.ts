@@ -62,7 +62,7 @@ export const deleteRecipe = async (req: Request, res: Response) => {
 };
 
 export const editRecipe = async (req: Request, res: Response) => {
-  const _id = req.params.id;
+  const _id = req.body._id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
     'title',
@@ -85,5 +85,55 @@ export const editRecipe = async (req: Request, res: Response) => {
       mensaje: 'An error occurred',
       error,
     })
+  }
+};
+
+export const getMyRecipes = async (req: Request, res: Response) => {
+  const _id = req.params.id;
+
+  try {
+    const recipesDB = await Recipe.find({ author: _id });
+    res.json(recipesDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
+
+export const getLatestRecipes = async (req: Request, res: Response) => {
+  try {
+    const recipesDB = await Recipe.find({ active: true }).limit(8);
+    res.json(recipesDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
+
+export const getBestRecipes = async (req: Request, res: Response) => {
+  try {
+    const recipesDB = await Recipe.find({ active: true }).sort({ score: -1 }).limit(8);
+    res.json(recipesDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
+
+export const getWorstRecipes = async (req: Request, res: Response) => {
+  try {
+    const recipesDB = await Recipe.find({ active: true }).sort({ score: 1 }).limit(8);
+    res.json(recipesDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
   }
 };

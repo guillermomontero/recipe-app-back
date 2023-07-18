@@ -66,7 +66,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 };
 
 export const editUser = async (req: Request, res: Response) => {
-  const _id = req.params.id;
+  const _id = req.body._id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
     'name',

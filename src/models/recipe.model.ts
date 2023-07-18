@@ -39,6 +39,9 @@ class Recipe {
   @prop({ default: true })
   active: boolean
 
+  @prop({ default: true })
+  draft: boolean
+
   @prop({ default: 0 })
   likes: number
 

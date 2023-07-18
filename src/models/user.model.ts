@@ -4,8 +4,8 @@ import { Location } from './location.model';
 import { Notification } from './notification.model';
 
 enum Role {
-  ADMIN = '1',
-  USER = '2'
+  ADMIN = 1,
+  USER = 2
 }
 
 export class User {
@@ -18,7 +18,7 @@ export class User {
   @prop({ required: [true, 'Email is required'], unique: true, trim: true })
   email: string
 
-  @prop({ required: [true, 'Phone is required'], default: null })
+  @prop({ default: null })
   telephone: number
 
   @prop({ default: Date.now })

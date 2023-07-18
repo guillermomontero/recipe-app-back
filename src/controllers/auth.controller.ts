@@ -28,7 +28,7 @@ export const login = async (req: Request, res: Response) => {
     // Check email
     const userDB = await User.findOne(
       { email: body.email }, 
-      { cardNumber: 0, cardExpires: 0, role: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0 }
+      { cardNumber: 0, cardExpires: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0 }
     )
 
     if (!userDB) {
@@ -44,7 +44,12 @@ export const login = async (req: Request, res: Response) => {
       });
     }
 
-    const token = generateToken(userDB);
+    const dataToToken = {
+      _id: userDB._id,
+      name: userDB.name
+    }
+
+    const token = generateToken(dataToToken);
     userDB.password = '';
 
     res.json({
