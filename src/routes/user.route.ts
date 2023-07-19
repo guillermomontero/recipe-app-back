@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { verifyAuth, verifyAdmin } from '../middlewares/auth.middleware';
-import { getAllUSers, createUser, getUser, deleteUser, editUser } from '../controllers/user.controller';
+import { getAllUsers, createUser, getUser, deleteUser, editUser } from '../controllers/user.controller';
 
 const router = Router();
 
-router.get('/getAllUsers', verifyAdmin, getAllUSers);
+router.get('/getAllUsers', verifyAdmin, getAllUsers);
 router.post('/createUser', createUser);
 router.get('/getUser/:id', verifyAuth, getUser);
 router.delete('/deleteUser/:id', verifyAdmin, deleteUser);

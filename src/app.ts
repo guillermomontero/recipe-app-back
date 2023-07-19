@@ -9,6 +9,7 @@ import usersRoutes from './routes/user.route';
 import authRoutes from './routes/auth.route';
 import categoriesRoutes from './routes/category.route';
 import temperaturesCategoriesRoutes from './routes/temperature-category.route';
+import countriesRoutes from './routes/country.route';
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/categories', categoriesRoutes);
 app.use('/api/v1/temperatureCategories', temperaturesCategoriesRoutes);
+app.use('/api/v1/countries', countriesRoutes);
 
 export default app;

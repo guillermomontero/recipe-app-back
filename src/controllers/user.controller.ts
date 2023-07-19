@@ -5,7 +5,7 @@ import User from '../models/user.model';
 
 const saltRounds = 10;
 
-export const getAllUSers = async (req: Request, res: Response) => {
+export const getAllUsers = async (req: Request, res: Response) => {
   try {
     const usersDB = await User.find({}, { password: 0, cardNumber: 0, cardExpires: 0 });
     

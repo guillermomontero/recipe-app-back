@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import _ from 'underscore';
 import User from '../models/user.model';
 import { generateToken } from '../utils/generate-token';
+import { ObjectId } from 'mongoose';
 
 const saltRounds = 10;
 
@@ -52,6 +54,8 @@ export const login = async (req: Request, res: Response) => {
     const token = generateToken(dataToToken);
     userDB.password = '';
 
+    await editLastSession(userDB._id);
+
     res.json({
       userDB,
       token
@@ -63,4 +67,13 @@ export const login = async (req: Request, res: Response) => {
       error
     });
   };
+};
+
+const editLastSession = async (id: any) => {
+  try {
+    await User.findByIdAndUpdate(id, { $set: { lastSession: new Date().toISOString() }}, { new: true, runValidators: true, context: 'query' });
+    return true;
+  } catch (error) {
+    return error;
+  }
 };
