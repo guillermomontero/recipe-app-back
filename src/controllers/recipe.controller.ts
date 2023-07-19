@@ -116,7 +116,7 @@ export const getLatestRecipes = async (req: Request, res: Response) => {
 
 export const getBestRecipes = async (req: Request, res: Response) => {
   try {
-    const recipesDB = await Recipe.find({ active: true }).sort({ score: -1 }).limit(8);
+    const recipesDB = await Recipe.find({ active: true }).sort({ likes: -1 }).limit(8);
     res.json(recipesDB);
   } catch (error) {
     return res.status(400).json({
@@ -128,12 +128,46 @@ export const getBestRecipes = async (req: Request, res: Response) => {
 
 export const getWorstRecipes = async (req: Request, res: Response) => {
   try {
-    const recipesDB = await Recipe.find({ active: true }).sort({ score: 1 }).limit(8);
+    const recipesDB = await Recipe.find({ active: true }).sort({ likes: 1 }).limit(8);
     res.json(recipesDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
       error,
     });
+  }
+};
+
+export const doLikeRecipe = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  // Through Underscore we choose which fields can be modified
+  const body = _.pick(req.body, [
+    'likes',
+  ]);
+
+  try {
+    const recipeDB = await Recipe.findByIdAndUpdate(_id, { $inc : { 'likes' : body.likes } }, { new: true, runValidators: true, context: 'query' });
+
+    res.json(recipeDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
+  }
+};
+
+export const doUnlikeRecipe = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+
+  try {
+    const recipeDB = await Recipe.findByIdAndUpdate(_id, { $inc : { 'likes' : -1 } }, { new: true, runValidators: true, context: 'query' });
+
+    res.json(recipeDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
   }
 };

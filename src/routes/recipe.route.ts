@@ -9,7 +9,9 @@ import {
   getMyRecipes,
   getLatestRecipes,
   getBestRecipes,
-  getWorstRecipes } from '../controllers/recipe.controller';
+  getWorstRecipes, 
+  doLikeRecipe,
+  doUnlikeRecipe } from '../controllers/recipe.controller';
 
 const router = Router();
 
@@ -21,6 +23,8 @@ router.put('/editRecipe', verifyAuth, editRecipe);
 router.get('/getMyRecipes/:id', verifyAuth, getMyRecipes);
 router.get('/getLatestRecipes/', verifyAuth, getLatestRecipes);
 router.get('/getBestRecipes/', verifyAuth, getBestRecipes);
-router.get('/getWOrstRecipes/', verifyAuth, getWorstRecipes);
+router.get('/getWorstRecipes/', verifyAuth, getWorstRecipes);
+router.put('/doLikeRecipe/', verifyAuth, doLikeRecipe);
+router.put('/doUnlikeRecipe/', verifyAuth, doUnlikeRecipe);
 
 export default router;

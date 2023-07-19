@@ -27,7 +27,7 @@ export class User {
   @prop({ type: () => Location})
   location: Location
 
-  @prop({ default: '' })
+  @prop({ default: 'https://www.adobe.com/content/dam/cc/us/en/creativecloud/photography/discover/portrait-photography/CODERED_B1_portrait_photography-P4a_438x447.jpg.img.jpg' })
   imageProfile: string
 
   @prop({ default: false })
@@ -62,6 +62,9 @@ export class User {
 
   @prop({ type: () => Notification })
   notifications: Notification
+
+  @prop({ default: [] })
+  recipesLike: string[]
 
   @prop({ default: true })
   active: boolean

@@ -44,9 +44,6 @@ class Recipe {
 
   @prop({ default: 0 })
   likes: number
-
-  @prop({ default: 0 })
-  score: number
 };
 
 const RecipeModel = getModelForClass(Recipe);
