@@ -4,7 +4,7 @@ import { createCategory, deleteCategory, editCategory, getAllCategories, getCate
 
 const router = Router();
 
-router.get('/getAllcategories', verifyAuth, getAllCategories);
+router.get('/getAllCategories', verifyAuth, getAllCategories);
 router.post('/createCategory', verifyAdmin, createCategory);
 router.get('/getCategory/:id', verifyAuth, getCategory);
 router.delete('/deleteCategory/:id', verifyAdmin, deleteCategory);

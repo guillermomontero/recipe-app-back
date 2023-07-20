@@ -10,6 +10,8 @@ import authRoutes from './routes/auth.route';
 import categoriesRoutes from './routes/category.route';
 import temperaturesCategoriesRoutes from './routes/temperature-category.route';
 import countriesRoutes from './routes/country.route';
+import unitTimes from './routes/unit-time.route';
+import unitTypes from './routes/unit-type.route';
 
 const app = express();
 
@@ -24,5 +26,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/categories', categoriesRoutes);
 app.use('/api/v1/temperatureCategories', temperaturesCategoriesRoutes);
 app.use('/api/v1/countries', countriesRoutes);
+app.use('/api/v1/unitTimes', unitTimes);
+app.use('/api/v1/unitTypes', unitTypes);
 
 export default app;
