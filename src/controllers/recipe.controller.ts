@@ -36,7 +36,7 @@ export const getRecipe = async (req: Request, res: Response) => {
 
   try {
     const recipeDB = await Recipe.find({ _id });
-    res.json(recipeDB);
+    res.json(recipeDB[0]);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -70,9 +70,11 @@ export const editRecipe = async (req: Request, res: Response) => {
     'ingredients',
     'steps',
     'cookingTime',
+    'unitTime',
     'temperatureCategory',
     'categories',
     'origin',
+    'draft',
     'photo'
   ]);
 
