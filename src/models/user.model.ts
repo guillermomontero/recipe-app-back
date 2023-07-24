@@ -64,7 +64,7 @@ export class User {
   notifications: Notification
 
   @prop({ default: [] })
-  recipesLike: string[]
+  favourites: string[]
 
   @prop({ default: true })
   active: boolean

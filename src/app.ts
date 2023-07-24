@@ -11,7 +11,7 @@ import categoriesRoutes from './routes/category.route';
 import temperaturesCategoriesRoutes from './routes/temperature-category.route';
 import countriesRoutes from './routes/country.route';
 import unitTimes from './routes/unit-time.route';
-import unitTypes from './routes/unit-type.route';
+import weightTypes from './routes/weight-type.route';
 
 const app = express();
 
@@ -27,6 +27,6 @@ app.use('/api/v1/categories', categoriesRoutes);
 app.use('/api/v1/temperatureCategories', temperaturesCategoriesRoutes);
 app.use('/api/v1/countries', countriesRoutes);
 app.use('/api/v1/unitTimes', unitTimes);
-app.use('/api/v1/unitTypes', unitTypes);
+app.use('/api/v1/weightTypes', weightTypes);
 
 export default app;

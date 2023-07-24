@@ -1,10 +1,24 @@
-import { prop, getModelForClass } from '@typegoose/typegoose';
+import { pre, prop, getModelForClass } from '@typegoose/typegoose';
+import SequenceModel from './sequence.model';
+
+@pre<UnitTime>('save', async function (next) {
+  const doc = this as UnitTime;
+  const sequence = await SequenceModel.findOneAndUpdate(
+    { name: 'unittimes' },
+    { $inc: { value: 1 } },
+    { new: true, upsert: true }
+  );
+
+  doc.value = sequence.value;
+
+  next();
+})
 
 export class UnitTime {
-  @prop({ default: '', trim: true })
+  @prop({ required: true, default: '', trim: true })
   name: string
 
-  @prop({ default: 0 })
+  @prop({ required: true, unique: true, default: 1 })
   value: number
 };
 

@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import _ from 'underscore';
 import User from '../models/user.model';
 import { generateToken } from '../utils/generate-token';
-import { ObjectId } from 'mongoose';
 
 const saltRounds = 10;
 

@@ -1,10 +1,10 @@
 import { pre, prop, getModelForClass } from '@typegoose/typegoose';
 import SequenceModel from './sequence.model';
 
-@pre<TemperatureCategory>('save', async function (next) {
-  const doc = this as TemperatureCategory;
+@pre<WeightType>('save', async function (next) {
+  const doc = this as WeightType;
   const sequence = await SequenceModel.findOneAndUpdate(
-    { name: 'temperaturecategories' },
+    { name: 'weighttypes' },
     { $inc: { value: 1 } },
     { new: true, upsert: true }
   );
@@ -14,14 +14,13 @@ import SequenceModel from './sequence.model';
   next();
 })
 
-// 0 - Not defined, 1 - Hot, 2 - Cold, 3 - Normal
-class TemperatureCategory {
+export class WeightType {
   @prop({ required: true, default: '', trim: true })
   name: string
 
   @prop({ required: true, unique: true, default: 1 })
   value: number
-}
+};
 
-const TemperatureCategoryModel = getModelForClass(TemperatureCategory);
-export default TemperatureCategoryModel;
+const WeightTypeModel = getModelForClass(WeightType);
+export default WeightTypeModel;
