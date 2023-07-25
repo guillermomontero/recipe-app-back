@@ -40,7 +40,7 @@ export const getUser = async (req: Request, res: Response) => {
 
   try {
     const userDB = await User.find({ _id }, { password: 0, cardNumber: 0, cardExpires: 0 });
-    res.json(userDB);
+    res.json(userDB[0]);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
