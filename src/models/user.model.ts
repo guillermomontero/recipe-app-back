@@ -33,12 +33,6 @@ export class User {
   @prop({ default: false })
   premium: boolean
 
-  @prop({ default: null })
-  cardNumber: number
-
-  @prop({ default: null })
-  cardExpires: number
-
   @prop({ default: Date.now })
   entryDate: Date
 

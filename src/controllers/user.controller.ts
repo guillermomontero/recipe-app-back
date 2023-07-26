@@ -39,7 +39,8 @@ export const getUser = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
-    const userDB = await User.find({ _id }, { password: 0, cardNumber: 0, cardExpires: 0 });
+    const userDB = await User.find({ _id }, { password: 0 });
+
     res.json(userDB[0]);
   } catch (error) {
     return res.status(400).json({
@@ -54,9 +55,8 @@ export const deleteUser = async (req: Request, res: Response) => {
 
   try {
     await User.findByIdAndDelete({ _id });
-    const usersDB = await User.find();
 
-    res.json(usersDB);
+    res.json({ msg: 'User successfully deleted' });
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -72,21 +72,89 @@ export const editUser = async (req: Request, res: Response) => {
     'name',
     'lastName',
     'birthDate',
-    'email',
     'telephone',
     'location',
     'imageProfile',
-    'cardNumber',
-    'cardExpires',
     'password',
     'allowEmail',
     'notifications'
   ]);
 
   try {
-    const userDB = await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    const userDB = await User.find({ _id }, { password: 0 });
 
-    res.json(userDB);
+    res.json(userDB[0]);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
+  }
+};
+
+export const changeEmail = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  // Through Underscore we choose which fields can be modified
+  const body = _.pick(req.body, [
+    'email',
+  ]);
+
+  try {
+    await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    const userDB = await User.find({ _id }, { password: 0 });
+
+    res.json(userDB[0]);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
+  }
+};
+
+export const changePassword = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  const oldPassword = req.body.oldPassword;
+  const userDB = await User.findById({ _id }, { password: 1 });
+  // Through Underscore we choose which fields can be modified
+  const body = _.pick(req.body, [
+    'password',
+  ]);
+
+  // Si el usuario existe, evaluamos la contraseña
+  if (!userDB || !bcrypt.compareSync(oldPassword, userDB.password)) {
+    return res.status(400).json({
+      message: 'Invalid password'
+    });
+  }
+
+  try {
+    await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    const userDB = await User.find({ _id }, { password: 0 });
+
+    res.json(userDB[0]);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
+  }
+};
+
+export const changePreferences = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  // Through Underscore we choose which fields can be modified
+  const body = _.pick(req.body, [
+    'allowEmail',
+    'notifications',
+  ]);
+
+  try {
+    await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    const userDB = await User.find({ _id }, { password: 0 });
+
+    res.json(userDB[0]);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
