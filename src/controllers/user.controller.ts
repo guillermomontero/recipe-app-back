@@ -71,6 +71,7 @@ export const editUser = async (req: Request, res: Response) => {
   const body = _.pick(req.body, [
     'name',
     'lastName',
+    'birthDate',
     'email',
     'telephone',
     'location',
