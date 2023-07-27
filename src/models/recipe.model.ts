@@ -40,9 +40,6 @@ class Recipe {
   createDate: Date
 
   @prop({ default: true })
-  active: boolean
-
-  @prop({ default: true })
   draft: boolean
 
   @prop({ default: 0 })

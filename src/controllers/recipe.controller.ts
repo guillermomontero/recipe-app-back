@@ -4,7 +4,7 @@ import _ from 'underscore';
 
 export const getAllRecipes = async (req: Request, res: Response) => {
   try {
-    const recipesDB = await Recipe.find();
+    const recipesDB = await Recipe.find({ draft: false });
     
     res.send(recipesDB);
   } catch (error) {
@@ -106,7 +106,7 @@ export const getMyRecipes = async (req: Request, res: Response) => {
 
 export const getLatestRecipes = async (req: Request, res: Response) => {
   try {
-    const recipesDB = await Recipe.find({ active: true }).sort({ createDate: -1 }).limit(8);
+    const recipesDB = await Recipe.find({ draft: false }).sort({ createDate: -1 }).limit(8);
     res.json(recipesDB);
   } catch (error) {
     return res.status(400).json({
@@ -118,7 +118,7 @@ export const getLatestRecipes = async (req: Request, res: Response) => {
 
 export const getBestRecipes = async (req: Request, res: Response) => {
   try {
-    const recipesDB = await Recipe.find({ active: true }).sort({ likes: -1 }).limit(8);
+    const recipesDB = await Recipe.find({ draft: false }).sort({ likes: -1 }).limit(8);
     res.json(recipesDB);
   } catch (error) {
     return res.status(400).json({
@@ -130,7 +130,7 @@ export const getBestRecipes = async (req: Request, res: Response) => {
 
 export const getWorstRecipes = async (req: Request, res: Response) => {
   try {
-    const recipesDB = await Recipe.find({ active: true }).sort({ likes: 1 }).limit(8);
+    const recipesDB = await Recipe.find({ draft: false }).sort({ likes: 1 }).limit(8);
     res.json(recipesDB);
   } catch (error) {
     return res.status(400).json({

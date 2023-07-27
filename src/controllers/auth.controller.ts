@@ -28,8 +28,8 @@ export const login = async (req: Request, res: Response) => {
   try {
     // Check email
     const userDB = await User.findOne(
-      { email: body.email }, 
-      { cardNumber: 0, cardExpires: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0 }
+      { email: body.email, active: true }, 
+      { allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0 }
     )
 
     if (!userDB) {
