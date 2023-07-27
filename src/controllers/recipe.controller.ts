@@ -106,7 +106,7 @@ export const getMyRecipes = async (req: Request, res: Response) => {
 
 export const getLatestRecipes = async (req: Request, res: Response) => {
   try {
-    const recipesDB = await Recipe.find({ draft: false }).sort({ createDate: -1 }).limit(8);
+    const recipesDB = await Recipe.find({ draft: false }).populate({ path: 'author', select: 'name lastName' }).sort({ createDate: -1 }).limit(8);
     res.json(recipesDB);
   } catch (error) {
     return res.status(400).json({

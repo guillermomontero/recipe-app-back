@@ -18,8 +18,8 @@ class Recipe {
   @prop({ default: 0 })
   cookingTime: number
 
-  @prop({ default: 'min' })
-  unitTime: string
+  @prop({ default: 0 })
+  unitTime: number
 
   @prop({ default: 0 })
   temperatureCategory: number
