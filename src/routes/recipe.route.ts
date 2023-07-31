@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { verifyAuth } from '../middlewares/auth.middleware';
 import {
   getAllRecipes,
+  getAllRecipesForSearch,
   createRecipe,
   getRecipe,
   deleteRecipe,
@@ -16,6 +17,7 @@ import {
 const router = Router();
 
 router.get('/getAllRecipes', verifyAuth, getAllRecipes);
+router.get('/getAllRecipesForSearch', verifyAuth, getAllRecipesForSearch);
 router.post('/createRecipe', verifyAuth, createRecipe);
 router.get('/getRecipe/:id', verifyAuth, getRecipe);
 router.delete('/deleteRecipe/:id', verifyAuth, deleteRecipe);

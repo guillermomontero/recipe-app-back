@@ -15,6 +15,19 @@ export const getAllRecipes = async (req: Request, res: Response) => {
   }
 };
 
+export const getAllRecipesForSearch = async (req: Request, res: Response) => {
+  try {
+    const recipesDB = await Recipe.find({ draft: false }, { title: 1 });
+    
+    res.send(recipesDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
+
 export const createRecipe = async (req: Request, res: Response) => {
   const payload = req.body;
 
