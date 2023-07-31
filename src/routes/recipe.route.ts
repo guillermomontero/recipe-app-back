@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { verifyAuth } from '../middlewares/auth.middleware';
 import {
   getAllRecipes,
+  getAllRecipesPagination,
   getAllRecipesForSearch,
   createRecipe,
   getRecipe,
@@ -17,6 +18,7 @@ import {
 const router = Router();
 
 router.get('/getAllRecipes', verifyAuth, getAllRecipes);
+router.get('/getAllRecipesPagination', verifyAuth, getAllRecipesPagination);
 router.get('/getAllRecipesForSearch', verifyAuth, getAllRecipesForSearch);
 router.post('/createRecipe', verifyAuth, createRecipe);
 router.get('/getRecipe/:id', verifyAuth, getRecipe);

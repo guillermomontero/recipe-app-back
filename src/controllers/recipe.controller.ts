@@ -15,6 +15,28 @@ export const getAllRecipes = async (req: Request, res: Response) => {
   }
 };
 
+export const getAllRecipesPagination = async (req: Request, res: Response) => {
+  const skip = Number(req.query.skip) || 0;
+  const limit = Number(req.query.limit) || 0;
+
+  try {
+    const totalRecipesDB = await Recipe.find({ draft: false }).countDocuments();
+    const recipesDB = await Recipe.find({ draft: false }).skip(skip).limit(limit);
+    
+    const recipes = {
+      totalRecipes: totalRecipesDB,
+      recipes: recipesDB
+    };
+
+    res.json(recipes);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
+
 export const getAllRecipesForSearch = async (req: Request, res: Response) => {
   try {
     const recipesDB = await Recipe.find({ draft: false }, { title: 1 });
@@ -105,10 +127,19 @@ export const editRecipe = async (req: Request, res: Response) => {
 
 export const getMyRecipes = async (req: Request, res: Response) => {
   const _id = req.params.id;
+  const skip = Number(req.query.skip) || 0;
+  const limit = Number(req.query.limit) || 0;
 
   try {
-    const recipesDB = await Recipe.find({ author: _id }).sort({ createDate: -1 });
-    res.json(recipesDB);
+    const totalRecipesDB = await Recipe.find({ author: _id }).countDocuments();
+    const recipesDB = await Recipe.find({ author: _id }).sort({ createDate: -1 }).skip(skip).limit(limit);
+    
+    const recipes = {
+      totalRecipes: totalRecipesDB,
+      recipes: recipesDB
+    };
+
+    res.json(recipes);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -118,9 +149,19 @@ export const getMyRecipes = async (req: Request, res: Response) => {
 };
 
 export const getLatestRecipes = async (req: Request, res: Response) => {
+  const skip = Number(req.query.skip) || 0;
+  const limit = Number(req.query.limit) || 9;
+
   try {
-    const recipesDB = await Recipe.find({ draft: false }).populate({ path: 'author', select: 'name lastName' }).sort({ createDate: -1 }).limit(8);
-    res.json(recipesDB);
+    const totalRecipesDB = await Recipe.find({ draft: false }).countDocuments();
+    const recipesDB = await Recipe.find({ draft: false }).populate({ path: 'author', select: 'name lastName' }).sort({ createDate: -1 }).skip(skip).limit(limit);
+    
+    const recipes = {
+      totalRecipes: totalRecipesDB,
+      recipes: recipesDB
+    };
+
+    res.json(recipes);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -130,9 +171,19 @@ export const getLatestRecipes = async (req: Request, res: Response) => {
 };
 
 export const getBestRecipes = async (req: Request, res: Response) => {
+  const skip = Number(req.query.skip) || 0;
+  const limit = Number(req.query.limit) || 9;
+
   try {
-    const recipesDB = await Recipe.find({ draft: false }).sort({ likes: -1 }).limit(8);
-    res.json(recipesDB);
+    const totalRecipesDB = await Recipe.find({ draft: false }).countDocuments();
+    const recipesDB = await Recipe.find({ draft: false }).sort({ likes: -1 }).skip(skip).limit(limit);
+    
+    const recipes = {
+      totalRecipes: totalRecipesDB,
+      recipes: recipesDB
+    };
+
+    res.json(recipes);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -142,9 +193,19 @@ export const getBestRecipes = async (req: Request, res: Response) => {
 };
 
 export const getWorstRecipes = async (req: Request, res: Response) => {
+  const skip = Number(req.query.skip) || 0;
+  const limit = Number(req.query.limit) || 9;
+  
   try {
-    const recipesDB = await Recipe.find({ draft: false }).sort({ likes: 1 }).limit(8);
-    res.json(recipesDB);
+    const totalRecipesDB = await Recipe.find({ draft: false }).countDocuments();
+    const recipesDB = await Recipe.find({ draft: false }).sort({ likes: 1 }).skip(skip).limit(limit);
+    
+    const recipes = {
+      totalRecipes: totalRecipesDB,
+      recipes: recipesDB
+    };
+
+    res.json(recipes);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
