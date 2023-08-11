@@ -1,4 +1,5 @@
-import 'dotenv/config'
+import 'dotenv/config';
+import path from 'path';
 
 import express from 'express';
 import morgan from 'morgan';
@@ -19,6 +20,11 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware for Vue.js router modo history
+import history from 'connect-history-api-fallback';
+app.use(history());
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/recipes', recipesRoutes);
 app.use('/api/v1/users', usersRoutes);
