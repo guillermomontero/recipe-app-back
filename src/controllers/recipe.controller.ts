@@ -39,9 +39,15 @@ export const getAllRecipesPagination = async (req: Request, res: Response) => {
 
 export const getAllRecipesForSearch = async (req: Request, res: Response) => {
   try {
-    const recipesDB = await Recipe.find({ draft: false }, { title: 1 });
+    const totalRecipesDB = await Recipe.find({ draft: false }).countDocuments();
+    const recipesDB = await Recipe.find({ draft: false }, { title: 1, categories: 1, temperatureCategory: 1, origin: 1, cookingTime: 1, unitTime: 1  });
     
-    res.send(recipesDB);
+    const recipes = {
+      totalRecipes: totalRecipesDB,
+      recipes: recipesDB
+    };
+
+    res.json(recipes);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
