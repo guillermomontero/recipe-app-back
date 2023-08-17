@@ -30,6 +30,9 @@ class Recipe {
   @prop({ default: '', trim: true })
   origin: string
 
+  @prop({ default: 1, trim: true })
+  portions: number
+
   @prop({ default: '', trim: true })
   photo: string
 
