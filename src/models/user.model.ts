@@ -12,6 +12,9 @@ export class User {
   @prop({ required: [true, 'Name is required'], trim: true })
   name: string
 
+  @prop({ required: [true, 'nickname is required'], trim: true })
+  nickname: string
+
   @prop({ required: [true, 'Lastname is required'], trim: true })
   lastName: string
 
