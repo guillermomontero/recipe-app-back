@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { verifyAuth, verifyAdmin } from '../middlewares/auth.middleware';
-import { getAllUsers, createUser, getUser, deleteUser, editUser, changeEmail, changePassword, changePreferences, changePlan } from '../controllers/user.controller';
+import { getAllUsers, createUser, getUser, getUserName, deleteUser, editUser, changeEmail, changePassword, changePreferences, changePlan } from '../controllers/user.controller';
 
 const router = Router();
 
 router.get('/getAllUsers', verifyAdmin, getAllUsers);
 router.post('/createUser', createUser);
 router.get('/getUser/:id', verifyAuth, getUser);
+router.get('/getUserName/:id', verifyAuth, getUserName);
 router.put('/deleteUser', verifyAuth, deleteUser);
 router.delete('/deleteUserAdmin/:id', verifyAdmin, deleteUser);
 router.put('/editUser', verifyAuth, editUser);
