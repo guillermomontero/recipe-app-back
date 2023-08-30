@@ -51,11 +51,11 @@ export const getUser = async (req: Request, res: Response) => {
   }
 };
 
-export const getUserName = async (req: Request, res: Response) => {
+export const getUserData = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
-    const userDB = await User.find({ _id }, { name: 1 });
+    const userDB = await User.find({ _id }, { name: 1, premium: 1 });
 
     res.json(userDB[0]);
   } catch (error) {
