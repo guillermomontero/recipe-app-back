@@ -51,6 +51,21 @@ export const getUser = async (req: Request, res: Response) => {
   }
 };
 
+export const getUserData = async (req: Request, res: Response) => {
+  const _id = req.params.id;
+
+  try {
+    const userDB = await User.find({ _id }, { name: 1, premium: 1 });
+
+    res.json(userDB[0]);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
+
 export const deleteUser = async (req: Request, res: Response) => {
   const _id = req.body._id;
   // Through Underscore we choose which fields can be modified
