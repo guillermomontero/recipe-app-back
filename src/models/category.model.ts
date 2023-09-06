@@ -15,7 +15,7 @@ import SequenceModel from './sequence.model';
 })
 
 export class Category {
-  @prop({ default: '', trim: true })
+  @prop({ default: '', trim: true, required: true, maxlength: 50 })
   name: string
 
   @prop({ default: 0 })

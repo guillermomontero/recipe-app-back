@@ -7,12 +7,12 @@ import { modelOptions, prop } from "@typegoose/typegoose"
 })
 
 export class Ingredient {
-  @prop({ default: '', trim: true })
+  @prop({ default: '', trim: true, required: true, maxlength: 100 })
   name: string
 
-  @prop({ default: 0 })
-  amount: number
+  @prop({ default: 0, required: true })
+  quantity: number
 
-  @prop({ default: '', trim: true })
+  @prop({ default: '', trim: true, required: true, maxlength: 20 })
   type: string
 };

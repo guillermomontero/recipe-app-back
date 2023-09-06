@@ -9,31 +9,31 @@ enum Role {
 }
 
 export class User {
-  @prop({ required: [true, 'Name is required'], trim: true })
+  @prop({ required: [true, 'Name is required'], trim: true, maxlength: 50 })
   name: string
 
-  @prop({ required: [true, 'nickname is required'], trim: true })
+  @prop({ required: [true, 'nickname is required'], trim: true, maxlength: 50, unique: true })
   nickname: string
 
-  @prop({ required: [true, 'Lastname is required'], trim: true })
+  @prop({ required: [true, 'Lastname is required'], trim: true, maxlength: 100 })
   lastName: string
 
-  @prop({ required: [true, 'Email is required'], unique: true, trim: true })
+  @prop({ required: [true, 'Email is required'], unique: true, trim: true, maxlength: 150 })
   email: string
 
   @prop({ default: null })
   telephone: number
 
   @prop({ default: Date.now })
-  birthDate: Date
+  birthday: Date
 
   @prop({ type: () => Location})
   location: Location
 
-  @prop({ default: 'https://www.adobe.com/content/dam/cc/us/en/creativecloud/photography/discover/portrait-photography/CODERED_B1_portrait_photography-P4a_438x447.jpg.img.jpg' })
+  @prop({ default: '', maxlength: 200 })
   imageProfile: string
 
-  @prop({ default: false })
+  @prop({ default: false, required: true })
   premium: boolean
 
   @prop({ default: Date.now })
@@ -45,10 +45,10 @@ export class User {
   @prop({ default: Date.now })
   lastSession: Date
 
-  @prop({ required: [true, 'You must enter a password']})
+  @prop({ required: [true, 'You must enter a password'], maxlength: 1000})
   password: string
 
-  @prop({ enum: Role, default: 2 })
+  @prop({ enum: Role, default: 2, required: true })
   role: Role
 
   @prop({ default: true })

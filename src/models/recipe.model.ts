@@ -3,40 +3,40 @@ import { Ingredient } from './ingredient.model';
 import { User } from './user.model';
 
 class Recipe {
-  @prop({ required: true, default: 'New recipe', trim: true })
+  @prop({ required: true, default: 'New recipe', trim: true, maxlength: 50 })
   title: string
 
-  @prop({ required: true, default: 'Description of the new recipe', trim: true })
+  @prop({ required: true, default: 'Description of the new recipe', trim: true, maxlength: 100 })
   description: string
 
   @prop({ type: () => [Ingredient]})
   ingredients: Ingredient[]
 
-  @prop({ required: true, default: 'Steps of the new recipe', trim: true })
+  @prop({ required: true, default: 'Steps of the new recipe', trim: true, maxlength: 10000 })
   steps: string
 
-  @prop({ default: 0 })
+  @prop({ default: 0, required: true })
   cookingTime: number
 
-  @prop({ default: 0 })
+  @prop({ default: 0, required: true })
   unitTime: number
 
-  @prop({ default: 0 })
+  @prop({ default: 0, required: true })
   temperatureCategory: number
 
   @prop({ type: String, default: () => [] })
   categories: string[]
 
-  @prop({ default: '', trim: true })
+  @prop({ default: '', trim: true, required: true, maxlength: 10 })
   origin: string
 
-  @prop({ default: 1 })
+  @prop({ default: 1, required: true })
   portions: number
 
-  @prop({ default: '', trim: true })
+  @prop({ default: '', trim: true, maxlength: 200 })
   photo: string
 
-  @prop({ ref: () => User })
+  @prop({ ref: () => User, required: true })
   author: Ref<User>
 
   @prop({ default: Date.now() })
