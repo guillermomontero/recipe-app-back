@@ -20,7 +20,7 @@ const fileFilterFn = (file: any, cb: any) => {
 const uploadMiddAvatar = multer({ storage: storageAvatar, limits: { fileSize: 5000000 }, fileFilter: (req, file, cb) => fileFilterFn(file, cb) }).single('image');
 const uploadMiddRecipe = multer({ storage: storageRecipe, limits: { fileSize: 5000000 }, fileFilter: (req, file, cb) => fileFilterFn(file, cb) }).single('image');
 
-router.post('/uploadAvatar/:id', uploadMiddAvatar, uploadAvatar);
-router.post('/uploadRecipe/:id', uploadMiddRecipe, uploadRecipe);
+router.post('/uploadAvatar/:id/:timestamp', uploadMiddAvatar, uploadAvatar);
+router.post('/uploadRecipe/:id/:timestamp', uploadMiddRecipe, uploadRecipe);
 
 export default router;
