@@ -118,9 +118,19 @@ export const editUser = async (req: Request, res: Response) => {
 
   try {
     await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
-    const userDB = await User.find({ _id }, { password: 0 });
+    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favourites: 0 });
 
-    res.json(userDB[0]);
+    const dataToToken = {
+      _id: userDB?._id,
+      name: userDB?.name
+    }
+
+    const token = generateToken(dataToToken);
+
+    res.json({
+      userDB,
+      token
+    });
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -236,6 +246,36 @@ export const changePlan = async (req: Request, res: Response) => {
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
     'premium',
+  ]);
+
+  try {
+    await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favourites: 0 });
+
+    const dataToToken = {
+      _id: userDB?._id,
+      name: userDB?.name
+    }
+
+    const token = generateToken(dataToToken);
+
+    res.json({
+      userDB,
+      token
+    });
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
+  }
+};
+
+export const deleteImageProfile = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  // Through Underscore we choose which fields can be modified
+  const body = _.pick(req.body, [
+    'imageProfile',
   ]);
 
   try {

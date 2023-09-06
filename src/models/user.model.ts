@@ -60,7 +60,7 @@ export class User {
   @prop({ type: () => Notification })
   notifications: Notification
 
-  @prop({ default: [] })
+  @prop({ type: String, default: () => [] })
   favourites: string[]
 
   @prop({ default: true })
