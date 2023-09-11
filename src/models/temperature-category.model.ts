@@ -16,7 +16,7 @@ import SequenceModel from './sequence.model';
 
 // 0 - Not defined, 1 - Hot, 2 - Cold, 3 - Normal
 class TemperatureCategory {
-  @prop({ required: true, default: '', trim: true })
+  @prop({ required: true, default: '', trim: true, maxlength: 50 })
   name: string
 
   @prop({ required: true, unique: true, default: 1 })

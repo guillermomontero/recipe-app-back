@@ -55,7 +55,7 @@ export const getUserData = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
-    const userDB = await User.find({ _id }, { name: 1, premium: 1 });
+    const userDB = await User.find({ _id }, { name: 1, premium: 1, nickname: 1 });
 
     res.json(userDB[0]);
   } catch (error) {
@@ -107,7 +107,7 @@ export const editUser = async (req: Request, res: Response) => {
   const body = _.pick(req.body, [
     'name',
     'lastName',
-    'birthDate',
+    'birthday',
     'telephone',
     'location',
     'imageProfile',

@@ -1,7 +1,7 @@
 import { prop, getModelForClass } from '@typegoose/typegoose';
 
 class Sequence {
-  @prop({ required: true })
+  @prop({ required: true, maxlength: 100 })
   public name: string;
 
   @prop({ required: true, default: 1 })

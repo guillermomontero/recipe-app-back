@@ -15,7 +15,7 @@ import SequenceModel from './sequence.model';
 })
 
 export class WeightType {
-  @prop({ required: true, default: '', trim: true })
+  @prop({ required: true, default: '', trim: true, maxlength: 50 })
   name: string
 
   @prop({ required: true, unique: true, default: 1 })

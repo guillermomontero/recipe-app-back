@@ -160,7 +160,7 @@ export const getLatestRecipes = async (req: Request, res: Response) => {
 
   try {
     const totalRecipesDB = await Recipe.find({ draft: false }).countDocuments();
-    const recipesDB = await Recipe.find({ draft: false }).populate({ path: 'author', select: 'name lastName' }).sort({ createDate: -1 }).skip(skip).limit(limit);
+    const recipesDB = await Recipe.find({ draft: false }).populate({ path: 'author', select: 'nickname name lastName' }).sort({ createDate: -1 }).skip(skip).limit(limit);
     
     const recipes = {
       totalRecipes: totalRecipesDB,
