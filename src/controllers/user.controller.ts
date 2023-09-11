@@ -118,7 +118,7 @@ export const editUser = async (req: Request, res: Response) => {
 
   try {
     await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
-    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favourites: 0 });
+    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favorites: 0 });
 
     const dataToToken = {
       _id: userDB?._id,
@@ -250,7 +250,7 @@ export const changePlan = async (req: Request, res: Response) => {
 
   try {
     await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
-    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favourites: 0 });
+    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favorites: 0 });
 
     const dataToToken = {
       _id: userDB?._id,
@@ -280,7 +280,7 @@ export const deleteImageProfile = async (req: Request, res: Response) => {
 
   try {
     await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
-    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favourites: 0 });
+    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favorites: 0 });
 
     const dataToToken = {
       _id: userDB?._id,
@@ -298,5 +298,28 @@ export const deleteImageProfile = async (req: Request, res: Response) => {
       mensaje: 'An error occurred',
       error,
     })
+  }
+};
+
+export const getMyFavorites = async (req: Request, res: Response) => {
+  const _id = req.params.id;
+  const skip = Number(req.query.skip) || 0;
+  const limit = Number(req.query.limit) || 0;
+
+  try {
+    const totalRecipesDB = await User.find({ author: _id }, { favorites: 1 }).length;
+    const recipesDB = await User.find({ author: _id }).populate({ path: 'favorites' }).sort({ createDate: -1 }).skip(skip).limit(limit);
+    
+    const recipes = {
+      totalRecipes: totalRecipesDB,
+      recipes: recipesDB
+    };
+
+    res.json(recipes);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
   }
 };
