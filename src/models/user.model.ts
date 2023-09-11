@@ -61,7 +61,7 @@ export class User {
   notifications: Notification
 
   @prop({ type: String, default: () => [] })
-  favourites: string[]
+  favorites: string[]
 
   @prop({ default: true })
   active: boolean

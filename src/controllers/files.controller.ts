@@ -16,7 +16,7 @@ export const uploadAvatar = async (req: Request, res: Response) => {
   const body = _.pick(payload, ['imageProfile']);
   try {
     await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
-    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favourites: 0 });
+    const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favorites: 0 });
 
     const dataToToken = {
       _id: userDB?._id,
