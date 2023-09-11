@@ -24,8 +24,8 @@ class Recipe {
   @prop({ default: 0, required: true })
   temperatureCategory: number
 
-  @prop({ type: String, default: () => [] })
-  categories: string[]
+  @prop({ type: Number, default: () => [] })
+  categories: number[]
 
   @prop({ default: '', trim: true, required: true, maxlength: 10 })
   origin: string
