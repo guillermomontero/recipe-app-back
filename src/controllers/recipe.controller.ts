@@ -253,3 +253,44 @@ export const doUnlikeRecipe = async (req: Request, res: Response) => {
     })
   }
 };
+
+export const getRecipesForPanel = async (req: Request, res: Response) => {
+  const dateUntil = new Date().toISOString().split('T')[0];
+  const fromServerUntil = new Date(dateUntil).toISOString().split('T')[0];
+
+  const getDateFrom = new Date().getTime() - ((24*60*60*1000) * 7);
+  const dateFrom = new Date(getDateFrom).toISOString().split('T')[0];
+  const fromServerFrom = new Date(dateFrom).toISOString().split('T')[0];
+
+  const from = req.query.from || fromServerFrom;
+  const until = req.query.until || fromServerUntil;
+
+  try {
+    const totalRecipesDB = await Recipe.find().countDocuments();
+    const agg = [
+      {
+        '$match': {
+          'createDate': { $gte: new Date(String(from)), $lte: new Date(String(until)) }
+        },
+      },
+    ];
+    const recipesDB = await Recipe.aggregate(agg).group({ _id: '$createDate', total: { $sum: 1 } }).sort({ _id: 1 });
+    
+    const recipes = {
+      range: [from, until],
+      id: String(new Date().getTime()),
+      title: 'recetas',
+      labelTooltip: 'recetasDadasDeAlta',
+      total: totalRecipesDB,
+      totalLastWeek: recipesDB.reduce((a, b) => a + b.total, 0),
+      data: recipesDB
+    };
+
+    res.json(recipes);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};

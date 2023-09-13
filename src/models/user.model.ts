@@ -24,7 +24,7 @@ export class User {
   @prop({ default: null })
   telephone: number
 
-  @prop({ default: Date.now })
+  @prop({ default: `${new Date().toISOString().split('T')[0]}T00:00:00.000+00:00` })
   birthday: Date
 
   @prop({ type: () => Location})
@@ -36,8 +36,11 @@ export class User {
   @prop({ default: false, required: true })
   premium: boolean
 
+  @prop({ default: `${new Date().toISOString().split('T')[0]}T00:00:00.000+00:00` })
+  createDate: Date
+
   @prop({ default: Date.now })
-  entryDate: Date
+  createTime: Date
 
   @prop({ default: Date.now })
   leavingDate: Date

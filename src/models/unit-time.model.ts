@@ -20,6 +20,9 @@ export class UnitTime {
 
   @prop({ required: true, unique: true, default: 1 })
   value: number
+
+  @prop({ default: `${new Date().toISOString().split('T')[0]}T00:00:00.000+00:00` })
+  createDate: Date
 };
 
 const UnitTimeModel = getModelForClass(UnitTime);

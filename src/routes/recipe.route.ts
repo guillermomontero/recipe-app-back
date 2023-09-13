@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { verifyAuth } from '../middlewares/auth.middleware';
+import { verifyAuth, verifyAdmin } from '../middlewares/auth.middleware';
 import {
   getAllRecipes,
   getAllRecipesPagination,
@@ -13,7 +13,8 @@ import {
   getBestRecipes,
   getWorstRecipes, 
   doLikeRecipe,
-  doUnlikeRecipe } from '../controllers/recipe.controller';
+  doUnlikeRecipe,
+  getRecipesForPanel } from '../controllers/recipe.controller';
 
 const router = Router();
 
@@ -30,5 +31,7 @@ router.get('/getBestRecipes/', verifyAuth, getBestRecipes);
 router.get('/getWorstRecipes/', verifyAuth, getWorstRecipes);
 router.put('/doLikeRecipe/', verifyAuth, doLikeRecipe);
 router.put('/doUnlikeRecipe/', verifyAuth, doUnlikeRecipe);
+router.get('/getRecipesForPanel/', verifyAdmin, getRecipesForPanel);
+
 
 export default router;

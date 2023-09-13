@@ -20,6 +20,9 @@ export class Category {
 
   @prop({ default: 0 })
   value: number
+
+  @prop({ default: `${new Date().toISOString().split('T')[0]}T00:00:00.000+00:00` })
+  createDate: Date
 };
 
 const CategoryModel = getModelForClass(Category);
