@@ -39,8 +39,11 @@ class Recipe {
   @prop({ ref: () => User, required: true })
   author: Ref<User>
 
-  @prop({ default: Date.now() })
+  @prop({ default: `${new Date().toISOString().split('T')[0]}T00:00:00.000+00:00` })
   createDate: Date
+
+  @prop({ default: Date.now })
+  createTime: Date
 
   @prop({ default: true })
   draft: boolean

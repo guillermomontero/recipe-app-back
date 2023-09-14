@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { verifyAuth, verifyAdmin } from '../middlewares/auth.middleware';
-import { getAllUsers, createUser, getUser, getUserData, deleteUser, editUser, changeEmail, changePassword, changePreferences, changePlan, deleteImageProfile, getMyFavorites } from '../controllers/user.controller';
+import { getAllUsers, createUser, getUser, getUserData, deleteUser, editUser, changeEmail, changePassword, changePreferences, changePlan, deleteImageProfile, getMyFavorites, getUsersForPanel } from '../controllers/user.controller';
 
 const router = Router();
 
@@ -17,5 +17,6 @@ router.put('/changePreferences', verifyAuth, changePreferences);
 router.put('/changePlan', verifyAuth, changePlan);
 router.put('/deleteImageProfile', verifyAuth, deleteImageProfile);
 router.get('/getMyFavorites/:id', verifyAuth, getMyFavorites);
+router.get('/getUsersForPanel', verifyAdmin, getUsersForPanel);
 
 export default router;

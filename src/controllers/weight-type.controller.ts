@@ -65,3 +65,22 @@ export const editWeightType = async (req: Request, res: Response) => {
     })
   }
 };
+
+export const getWeightTypesForPanel = async (req: Request, res: Response) => {
+  try {
+    const weightTypesDB = await WeightType.find().countDocuments();
+    
+    const weightTypes = {
+      id: String(new Date().getTime()),
+      title: 'tiposDePeso',
+      total: weightTypesDB,
+    };
+
+    res.json(weightTypes);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};

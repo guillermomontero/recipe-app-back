@@ -27,3 +27,22 @@ export const getCountry = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const getCountriesForPanel = async (req: Request, res: Response) => {
+  try {
+    const countriesDB = await Country.find().countDocuments();
+    
+    const countries = {
+      id: String(new Date().getTime()),
+      title: 'paises',
+      total: countriesDB,
+    };
+
+    res.json(countries);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
