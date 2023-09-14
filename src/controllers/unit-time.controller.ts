@@ -65,3 +65,22 @@ export const editUnitTime = async (req: Request, res: Response) => {
     })
   }
 };
+
+export const getUnitTimesForPanel = async (req: Request, res: Response) => {
+  try {
+    const unitTimesDB = await UnitTime.find().countDocuments();
+    
+    const unitTimes = {
+      id: String(new Date().getTime()),
+      title: 'unidadesDeTiempo',
+      total: unitTimesDB,
+    };
+
+    res.json(unitTimes);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};

@@ -79,3 +79,22 @@ export const editTemperatureCategory = async (req: Request, res: Response) => {
     })
   }
 };
+
+export const getTemperatureCategoriesForPanel = async (req: Request, res: Response) => {
+  try {
+    const temperatureCategoriesDB = await TemperatureCategory.find().countDocuments();
+    
+    const temperatureCategories = {
+      id: String(new Date().getTime()),
+      title: 'categoriasDeTemperatura',
+      total: temperatureCategoriesDB,
+    };
+
+    res.json(temperatureCategories);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
