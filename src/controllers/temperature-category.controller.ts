@@ -87,7 +87,10 @@ export const getTemperatureCategoriesForPanel = async (req: Request, res: Respon
     const temperatureCategories = {
       id: String(new Date().getTime()),
       title: 'categoriasDeTemperatura',
+      page: 'admin-temperature-categories',
       total: temperatureCategoriesDB,
+      showChart: false,
+      order: 4,
     };
 
     res.json(temperatureCategories);

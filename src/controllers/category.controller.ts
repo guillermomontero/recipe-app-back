@@ -103,11 +103,14 @@ export const getCategoriesForPanel = async (req: Request, res: Response) => {
     const categoriesDB = await Category.aggregate(agg).group({ _id: '$createDate', total: { $sum: 1 } }).sort({ _id: 1 });
     
     const users = {
-      range: [from, until],
       id: String(new Date().getTime()),
       title: 'categorias',
-      labelTooltip: 'categoriasDadasDeAlta',
+      page: 'admin-categories',
       total: totalCategoriesDB,
+      showChart: true,
+      order: 2,
+      labelTooltip: 'categoriasDadasDeAlta',
+      range: [from, until],
       totalLastWeek: categoriesDB.reduce((a, b) => a + b.total, 0),
       data: categoriesDB
     };

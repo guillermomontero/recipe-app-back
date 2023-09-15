@@ -35,7 +35,10 @@ export const getCountriesForPanel = async (req: Request, res: Response) => {
     const countries = {
       id: String(new Date().getTime()),
       title: 'paises',
+      page: 'admin-countries',
       total: countriesDB,
+      showChart: false,
+      order: 3,
     };
 
     res.json(countries);

@@ -73,7 +73,10 @@ export const getWeightTypesForPanel = async (req: Request, res: Response) => {
     const weightTypes = {
       id: String(new Date().getTime()),
       title: 'tiposDePeso',
+      page: 'admin-weight-types',
       total: weightTypesDB,
+      showChart: false,
+      order: 6,
     };
 
     res.json(weightTypes);
