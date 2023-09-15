@@ -277,11 +277,14 @@ export const getRecipesForPanel = async (req: Request, res: Response) => {
     const recipesDB = await Recipe.aggregate(agg).group({ _id: '$createDate', total: { $sum: 1 } }).sort({ _id: 1 });
     
     const recipes = {
-      range: [from, until],
       id: String(new Date().getTime()),
       title: 'recetas',
-      labelTooltip: 'recetasDadasDeAlta',
+      page: 'admin-recipes',
       total: totalRecipesDB,
+      showChart: true,
+      order: 1,
+      labelTooltip: 'recetasDadasDeAlta',
+      range: [from, until],
       totalLastWeek: recipesDB.reduce((a, b) => a + b.total, 0),
       data: recipesDB
     };

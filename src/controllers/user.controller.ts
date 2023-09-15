@@ -347,11 +347,14 @@ export const getUsersForPanel = async (req: Request, res: Response) => {
     const usersDB = await User.aggregate(agg).group({ _id: '$createDate', total: { $sum: 1 } }).sort({ _id: 1 });
     
     const users = {
-      range: [from, until],
       id: String(new Date().getTime()),
       title: 'usuarios',
-      labelTooltip: 'usuariosDadosDeAlta',
+      page: 'admin-users',
       total: totalUsersDB,
+      showChart: true,
+      order: 0,
+      labelTooltip: 'usuariosDadosDeAlta',
+      range: [from, until],
       totalLastWeek: usersDB.reduce((a, b) => a + b.total, 0),
       data: usersDB
     };

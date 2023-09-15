@@ -73,7 +73,10 @@ export const getUnitTimesForPanel = async (req: Request, res: Response) => {
     const unitTimes = {
       id: String(new Date().getTime()),
       title: 'unidadesDeTiempo',
+      page: 'admin-unit-times',
       total: unitTimesDB,
+      showChart: false,
+      order: 5,
     };
 
     res.json(unitTimes);
