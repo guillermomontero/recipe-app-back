@@ -16,7 +16,7 @@ export class User {
   nickname: string
 
   @prop({ required: [true, 'Lastname is required'], trim: true, maxlength: 100 })
-  lastName: string
+  lastname: string
 
   @prop({ required: [true, 'Email is required'], unique: true, trim: true, maxlength: 150 })
   email: string
@@ -35,6 +35,12 @@ export class User {
 
   @prop({ default: false, required: true })
   premium: boolean
+
+  @prop({ default: '1970-01-01T00:00:00.000+00:00' })
+  premiumSince: Date
+
+  @prop({ default: '1970-01-01T00:00:00.000+00:00' })
+  premiumUntil: Date
 
   @prop({ default: `${new Date().toISOString().split('T')[0]}T00:00:00.000+00:00` })
   createDate: Date
