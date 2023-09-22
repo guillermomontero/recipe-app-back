@@ -8,7 +8,7 @@ const saltRounds = 10;
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const usersDB = await User.find({}, { password: 0, cardNumber: 0, cardExpires: 0 });
+    const usersDB = await User.find({}, { password: 0 });
     
     res.send(usersDB);
   } catch (error) {
