@@ -14,7 +14,8 @@ import {
   getWorstRecipes, 
   doLikeRecipe,
   doUnlikeRecipe,
-  getRecipesForPanel } from '../controllers/recipe.controller';
+  getRecipesForPanel,
+  deleteRecipeAdmin } from '../controllers/recipe.controller';
 
 const router = Router();
 
@@ -24,6 +25,7 @@ router.get('/getAllRecipesForSearch', verifyAuth, getAllRecipesForSearch);
 router.post('/createRecipe', verifyAuth, createRecipe);
 router.get('/getRecipe/:id', verifyAuth, getRecipe);
 router.delete('/deleteRecipe/:id', verifyAuth, deleteRecipe);
+router.delete('/deleteRecipeAdmin/:id', verifyAdmin, deleteRecipeAdmin);
 router.put('/editRecipe', verifyAuth, editRecipe);
 router.get('/getMyRecipes/:id', verifyAuth, getMyRecipes);
 router.get('/getLatestRecipes/', verifyAuth, getLatestRecipes);
