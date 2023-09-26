@@ -36,7 +36,7 @@ export const getCategory = async (req: Request, res: Response) => {
 
   try {
     const categoryDB = await Category.find({ _id });
-    res.json(categoryDB);
+    res.json(categoryDB[0]);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -45,14 +45,13 @@ export const getCategory = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteCategory = async (req: Request, res: Response) => {
+export const deleteCategoryAdmin = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
     await Category.findByIdAndDelete({ _id });
-    const categoriesDB = await Category.find();
 
-    res.json(categoriesDB);
+    res.json({ msg: 'Category remove successfully'});
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -61,7 +60,7 @@ export const deleteCategory = async (req: Request, res: Response) => {
   }
 };
 
-export const editCategory = async (req: Request, res: Response) => {
+export const apiEditCategoryAdmin = async (req: Request, res: Response) => {
   const _id = req.body._id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
