@@ -15,6 +15,20 @@ export const getAllUnitTimes = async (req: Request, res: Response) => {
   }
 };
 
+export const getUnitTime = async (req: Request, res: Response) => {
+  const _id = req.params.id;
+
+  try {
+    const unitTimeDB = await UnitTime.find({ _id });
+    res.json(unitTimeDB[0]);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
+
 export const createUnitTime = async (req: Request, res: Response) => {
   const payload = req.body;
 
@@ -31,7 +45,7 @@ export const createUnitTime = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteUnitTime = async (req: Request, res: Response) => {
+export const deleteUnitTimeAdmin = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
@@ -47,7 +61,7 @@ export const deleteUnitTime = async (req: Request, res: Response) => {
   }
 };
 
-export const editUnitTime = async (req: Request, res: Response) => {
+export const editUnitTimeAdmin = async (req: Request, res: Response) => {
   const _id = req.body._id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
