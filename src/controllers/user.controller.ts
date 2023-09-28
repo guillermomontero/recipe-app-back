@@ -106,7 +106,7 @@ export const editUser = async (req: Request, res: Response) => {
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
     'name',
-    'lastName',
+    'lastname',
     'birthday',
     'telephone',
     'location',
@@ -131,6 +131,39 @@ export const editUser = async (req: Request, res: Response) => {
       userDB,
       token
     });
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
+  }
+};
+
+export const editUserAdmin = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  // Through Underscore we choose which fields can be modified
+  const body = _.pick(req.body, [
+    'name',
+    'lastname',
+    'nickname',
+    'emailname',
+    'telephone',
+    'birthday',
+    'location',
+    'imageProfile',
+    'premium',
+    'premiumSince',
+    'premiumUntil',
+    'role',
+    'allowEmail',
+    'allowTerms',
+    'notifications',
+  ]);
+
+  try {
+    await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+
+    res.json({ msg: 'User edited successfully'});
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -365,5 +398,24 @@ export const getUsersForPanel = async (req: Request, res: Response) => {
       mensaje: 'An error occurred',
       error,
     });
+  };
+};
+
+export const unsuscribeUserAdmin = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  // Through Underscore we choose which fields can be modified
+  const body = _.pick(req.body, [
+    'active',
+  ]);
+
+  try {
+    await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+
+    res.json({ msg: 'user successfully unsubscribed' });
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
   }
 };

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import _ from 'underscore';
 import Country from "../models/country.model";
 
 export const getAllCountries = async (req: Request, res: Response) => {
@@ -19,7 +20,7 @@ export const getCountry = async (req: Request, res: Response) => {
 
   try {
     const countryDB = await Country.find({ _id });
-    res.json(countryDB);
+    res.json(countryDB[0]);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -47,5 +48,39 @@ export const getCountriesForPanel = async (req: Request, res: Response) => {
       mensaje: 'An error occurred',
       error,
     });
+  }
+};
+
+export const editCountryAdmin = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  // Through Underscore we choose which fields can be modified
+  const body = _.pick(req.body, [
+    'name',
+  ]);
+
+  try {
+    const countryDB = await Country.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+
+    res.json(countryDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
+  }
+};
+
+export const deleteCountryAdmin = async (req: Request, res: Response) => {
+  const _id = req.params.id;
+
+  try {
+    await Country.findByIdAndDelete({ _id });
+
+    res.json({ msg: 'Country remove successfully'});
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
   }
 };

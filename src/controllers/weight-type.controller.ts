@@ -15,6 +15,20 @@ export const getAllWeightTypes = async (req: Request, res: Response) => {
   }
 };
 
+export const getWeightType = async (req: Request, res: Response) => {
+  const _id = req.params.id;
+
+  try {
+    const weightTypeDB = await WeightType.find({ _id });
+    res.json(weightTypeDB[0]);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
+
 export const createWeightType = async (req: Request, res: Response) => {
   const payload = req.body;
 
@@ -31,7 +45,7 @@ export const createWeightType = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteWeightType = async (req: Request, res: Response) => {
+export const deleteWeightTypeAdmin = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
@@ -47,7 +61,7 @@ export const deleteWeightType = async (req: Request, res: Response) => {
   }
 };
 
-export const editWeightType = async (req: Request, res: Response) => {
+export const editWeightTypeAdmin = async (req: Request, res: Response) => {
   const _id = req.body._id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [

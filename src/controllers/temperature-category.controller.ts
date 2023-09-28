@@ -36,7 +36,7 @@ export const getTemperatureCategory = async (req: Request, res: Response) => {
 
   try {
     const temperatureCategoryDB = await TemperatureCategory.find({ _id });
-    res.json(temperatureCategoryDB);
+    res.json(temperatureCategoryDB[0]);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -45,7 +45,7 @@ export const getTemperatureCategory = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteTemperatureCategory = async (req: Request, res: Response) => {
+export const deleteTemperatureCategoryAdmin = async (req: Request, res: Response) => {
   const _id = req.params.id;
 
   try {
@@ -61,7 +61,7 @@ export const deleteTemperatureCategory = async (req: Request, res: Response) => 
   }
 };
 
-export const editTemperatureCategory = async (req: Request, res: Response) => {
+export const editTemperatureCategoryAdmin = async (req: Request, res: Response) => {
   const _id = req.body._id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [

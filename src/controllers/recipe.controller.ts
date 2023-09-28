@@ -102,6 +102,21 @@ export const deleteRecipe = async (req: Request, res: Response) => {
   }
 };
 
+export const deleteRecipeAdmin = async (req: Request, res: Response) => {
+  const _id = req.params.id;
+
+  try {
+    await Recipe.findByIdAndDelete({ _id });
+
+    res.json({ msg: 'Recipe successfully deleted'});
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    })
+  }
+};
+
 export const editRecipe = async (req: Request, res: Response) => {
   const _id = req.body._id;
   // Through Underscore we choose which fields can be modified
@@ -160,7 +175,7 @@ export const getLatestRecipes = async (req: Request, res: Response) => {
 
   try {
     const totalRecipesDB = await Recipe.find({ draft: false }).countDocuments();
-    const recipesDB = await Recipe.find({ draft: false }).populate({ path: 'author', select: 'nickname name lastName' }).sort({ createDate: -1 }).skip(skip).limit(limit);
+    const recipesDB = await Recipe.find({ draft: false }).populate({ path: 'author', select: 'nickname name lastname' }).sort({ createDate: -1 }).skip(skip).limit(limit);
     
     const recipes = {
       totalRecipes: totalRecipesDB,
