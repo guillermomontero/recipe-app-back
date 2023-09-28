@@ -60,7 +60,7 @@ export const deleteCategoryAdmin = async (req: Request, res: Response) => {
   }
 };
 
-export const apiEditCategoryAdmin = async (req: Request, res: Response) => {
+export const editCategoryAdmin = async (req: Request, res: Response) => {
   const _id = req.body._id;
   // Through Underscore we choose which fields can be modified
   const body = _.pick(req.body, [
