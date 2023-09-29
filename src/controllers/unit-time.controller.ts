@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import UnitTime from '../models/unit-time.model';
 import _ from 'underscore';
+import UnitTime from '../models/unit-time.model';
 
 export const getAllUnitTimes = async (req: Request, res: Response) => {
   try {
@@ -45,14 +45,14 @@ export const createUnitTime = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteUnitTimeAdmin = async (req: Request, res: Response) => {
-  const _id = req.params.id;
+export const editUnitTimeAdmin = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  const body = _.pick(req.body, ['name']);
 
   try {
-    await UnitTime.findByIdAndDelete({ _id });
-    const unitTimesDB = await UnitTime.find();
+    const unitTimeDB = await UnitTime.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
 
-    res.json(unitTimesDB);
+    res.json(unitTimeDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -61,17 +61,14 @@ export const deleteUnitTimeAdmin = async (req: Request, res: Response) => {
   }
 };
 
-export const editUnitTimeAdmin = async (req: Request, res: Response) => {
-  const _id = req.body._id;
-  // Through Underscore we choose which fields can be modified
-  const body = _.pick(req.body, [
-    'name',
-  ]);
+export const deleteUnitTimeAdmin = async (req: Request, res: Response) => {
+  const _id = req.params.id;
 
   try {
-    const unitTimeDB = await UnitTime.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    await UnitTime.findByIdAndDelete({ _id });
+    const unitTimesDB = await UnitTime.find();
 
-    res.json(unitTimeDB);
+    res.json(unitTimesDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',

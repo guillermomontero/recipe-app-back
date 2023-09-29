@@ -1,12 +1,26 @@
 import { Request, Response } from 'express';
-import Category from '../models/category.model';
 import _ from 'underscore';
+import Category from '../models/category.model';
 
 export const getAllCategories = async (req: Request, res: Response) => {
   try {
     const categoriesDB = await Category.find();
     
     res.send(categoriesDB);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
+  }
+};
+
+export const getCategory = async (req: Request, res: Response) => {
+  const _id = req.params.id;
+
+  try {
+    const categoryDB = await Category.find({ _id });
+    res.json(categoryDB[0]);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -31,17 +45,19 @@ export const createCategory = async (req: Request, res: Response) => {
   }
 };
 
-export const getCategory = async (req: Request, res: Response) => {
-  const _id = req.params.id;
+export const editCategoryAdmin = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  const body = _.pick(req.body, ['name']);
 
   try {
-    const categoryDB = await Category.find({ _id });
-    res.json(categoryDB[0]);
+    const categoryDB = await Category.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+
+    res.json(categoryDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
       error,
-    });
+    })
   }
 };
 
@@ -52,25 +68,6 @@ export const deleteCategoryAdmin = async (req: Request, res: Response) => {
     await Category.findByIdAndDelete({ _id });
 
     res.json({ msg: 'Category remove successfully'});
-  } catch (error) {
-    return res.status(400).json({
-      mensaje: 'An error occurred',
-      error,
-    })
-  }
-};
-
-export const editCategoryAdmin = async (req: Request, res: Response) => {
-  const _id = req.body._id;
-  // Through Underscore we choose which fields can be modified
-  const body = _.pick(req.body, [
-    'name',
-  ]);
-
-  try {
-    const categoryDB = await Category.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
-
-    res.json(categoryDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',

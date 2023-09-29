@@ -29,34 +29,9 @@ export const getCountry = async (req: Request, res: Response) => {
   }
 };
 
-export const getCountriesForPanel = async (req: Request, res: Response) => {
-  try {
-    const countriesDB = await Country.find().countDocuments();
-    
-    const countries = {
-      id: String(new Date().getTime()),
-      title: 'paises',
-      page: 'admin-countries',
-      total: countriesDB,
-      showChart: false,
-      order: 3,
-    };
-
-    res.json(countries);
-  } catch (error) {
-    return res.status(400).json({
-      mensaje: 'An error occurred',
-      error,
-    });
-  }
-};
-
 export const editCountryAdmin = async (req: Request, res: Response) => {
   const _id = req.body._id;
-  // Through Underscore we choose which fields can be modified
-  const body = _.pick(req.body, [
-    'name',
-  ]);
+  const body = _.pick(req.body, ['name']);
 
   try {
     const countryDB = await Country.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
@@ -82,5 +57,27 @@ export const deleteCountryAdmin = async (req: Request, res: Response) => {
       mensaje: 'An error occurred',
       error,
     })
+  }
+};
+
+export const getCountriesForPanel = async (req: Request, res: Response) => {
+  try {
+    const countriesDB = await Country.find().countDocuments();
+    
+    const countries = {
+      id: String(new Date().getTime()),
+      title: 'paises',
+      page: 'admin-countries',
+      total: countriesDB,
+      showChart: false,
+      order: 3,
+    };
+
+    res.json(countries);
+  } catch (error) {
+    return res.status(400).json({
+      mensaje: 'An error occurred',
+      error,
+    });
   }
 };

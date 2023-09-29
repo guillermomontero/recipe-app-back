@@ -3,3 +3,7 @@ declare namespace Express {
     userId: string
   }
 }
+
+export interface IJWTToken {
+  _id: string
+}
