@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import WeightType from '../models/weight-type.model';
 import _ from 'underscore';
+import WeightType from '../models/weight-type.model';
 
 export const getAllWeightTypes = async (req: Request, res: Response) => {
   try {
@@ -45,14 +45,14 @@ export const createWeightType = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteWeightTypeAdmin = async (req: Request, res: Response) => {
-  const _id = req.params.id;
+export const editWeightTypeAdmin = async (req: Request, res: Response) => {
+  const _id = req.body._id;
+  const body = _.pick(req.body, ['name']);
 
   try {
-    await WeightType.findByIdAndDelete({ _id });
-    const weightTypesDB = await WeightType.find();
+    const weightTypeDB = await WeightType.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
 
-    res.json(weightTypesDB);
+    res.json(weightTypeDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',
@@ -61,17 +61,14 @@ export const deleteWeightTypeAdmin = async (req: Request, res: Response) => {
   }
 };
 
-export const editWeightTypeAdmin = async (req: Request, res: Response) => {
-  const _id = req.body._id;
-  // Through Underscore we choose which fields can be modified
-  const body = _.pick(req.body, [
-    'name',
-  ]);
+export const deleteWeightTypeAdmin = async (req: Request, res: Response) => {
+  const _id = req.params.id;
 
   try {
-    const weightTypeDB = await WeightType.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
+    await WeightType.findByIdAndDelete({ _id });
+    const weightTypesDB = await WeightType.find();
 
-    res.json(weightTypeDB);
+    res.json(weightTypesDB);
   } catch (error) {
     return res.status(400).json({
       mensaje: 'An error occurred',

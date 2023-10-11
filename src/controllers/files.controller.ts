@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import _ from 'underscore';
 import path from "node:path";
+import _ from 'underscore';
 import { generateToken } from '../utils/generate-token';
 import User from '../models/user.model';
 import Recipe from '../models/recipe.model';
@@ -9,11 +9,9 @@ export const uploadAvatar = async (req: Request, res: Response) => {
   const _id = req.params.id;
   const timestamp = req.params.timestamp;
   const ext = req.file ? path.extname(req.file.originalname) : '.jpg';
-  const payload = {
-    imageProfile: `${process.env.BASE_URL}/uploads/images/avatar/${_id}-${timestamp}${ext}`
-  };
-
+  const payload = { imageProfile: `${process.env.BASE_URL}/uploads/images/avatar/${_id}-${timestamp}${ext}` };
   const body = _.pick(payload, ['imageProfile']);
+
   try {
     await User.findByIdAndUpdate(_id, body, { new: true, runValidators: true, context: 'query' });
     const userDB = await User.findOne({ _id }, { password: 0, allowEmail: 0, allowTerms: 0, notifications: 0, active: 0, leavingDate: 0, role: 0, favorites: 0 });
@@ -41,10 +39,7 @@ export const uploadRecipe = async (req: Request, res: Response) => {
   const _id = req.params.id;
   const timestamp = req.params.timestamp;
   const ext = req.file ? path.extname(req.file.originalname) : '.jpg';
-  const payload = {
-    photo: `${process.env.BASE_URL}/uploads/images/recipe/${_id}-${timestamp}${ext}`
-  };
-  
+  const payload = { photo: `${process.env.BASE_URL}/uploads/images/recipe/${_id}-${timestamp}${ext}` };
   const body = _.pick(payload, ['photo']);
 
   try {

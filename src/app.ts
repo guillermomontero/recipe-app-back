@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// API
 app.use('/api/v1/recipes', recipesRoutes);
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/auth', authRoutes);
