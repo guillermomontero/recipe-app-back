@@ -104,7 +104,7 @@ export const getCategoriesForPanel = async (req: Request, res: Response) => {
       page: 'admin-categories',
       total: totalCategoriesDB,
       showChart: true,
-      order: 2,
+      order: 3,
       labelTooltip: 'categoriasDadasDeAlta',
       range: [from, until],
       totalLastWeek: categoriesDB.reduce((a, b) => a + b.total, 0),
