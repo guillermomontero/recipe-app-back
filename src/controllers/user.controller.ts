@@ -385,7 +385,7 @@ export const getUsersForPanel = async (req: Request, res: Response) => {
       page: 'admin-users',
       total: totalUsersDB,
       showChart: true,
-      order: 0,
+      order: 1,
       labelTooltip: 'usuariosDadosDeAlta',
       range: [from, until],
       totalLastWeek: usersDB.reduce((a, b) => a + b.total, 0),

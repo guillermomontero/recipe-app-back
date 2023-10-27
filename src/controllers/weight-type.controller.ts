@@ -90,7 +90,7 @@ export const getWeightTypesForPanel = async (req: Request, res: Response) => {
       page: 'admin-weight-types',
       total: weightTypesDB,
       showChart: false,
-      order: 6,
+      order: 7,
     };
 
     res.json(weightTypes);

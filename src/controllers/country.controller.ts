@@ -39,7 +39,7 @@ export const getCountriesForPanel = async (req: Request, res: Response) => {
       page: 'admin-countries',
       total: countriesDB,
       showChart: false,
-      order: 3,
+      order: 4,
     };
 
     res.json(countries);

@@ -297,7 +297,7 @@ export const getRecipesForPanel = async (req: Request, res: Response) => {
       page: 'admin-recipes',
       total: totalRecipesDB,
       showChart: true,
-      order: 1,
+      order: 2,
       labelTooltip: 'recetasDadasDeAlta',
       range: [from, until],
       totalLastWeek: recipesDB.reduce((a, b) => a + b.total, 0),

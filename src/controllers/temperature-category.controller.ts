@@ -90,7 +90,7 @@ export const getTemperatureCategoriesForPanel = async (req: Request, res: Respon
       page: 'admin-temperature-categories',
       total: temperatureCategoriesDB,
       showChart: false,
-      order: 4,
+      order: 5,
     };
 
     res.json(temperatureCategories);
