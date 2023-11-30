@@ -12,7 +12,6 @@ export const register = async (req: Request, res: Response) => {
 
   try {
     const userDB = await User.create(body);
-
     res.json(userDB)
   } catch (error) {
     return res.status(400).json({

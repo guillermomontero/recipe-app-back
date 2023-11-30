@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from 'bcrypt';
 import _ from 'underscore';
+import { sendMailWelcome } from '../emailService'
 import { generateToken } from '../utils/generate-token';
 import User from '../models/user.model';
 
@@ -26,6 +27,8 @@ export const createUser = async (req: Request, res: Response) => {
   try {
     const userDB = new User(payload);
     await userDB.save();
+
+    await sendMailWelcome(userDB);
 
     res.json(userDB)
   } catch (error) {
