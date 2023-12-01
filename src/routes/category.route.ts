@@ -1,20 +1,14 @@
 import { Router } from 'express';
 import { verifyAuth, verifyAdmin } from '../middlewares/auth.middleware';
-import {
-  getAllCategories,
-  getCategory,
-  createCategory,
-  editCategoryAdmin,
-  deleteCategoryAdmin,
-  getCategoriesForPanel } from '../controllers/category.controller';
+import CategoryController from '../controllers/category.controller';
 
 const router = Router();
 
-router.get('/getAllCategories', verifyAuth, getAllCategories);
-router.get('/getCategory/:id', verifyAuth, getCategory);
-router.post('/createCategory', verifyAdmin, createCategory);
-router.put('/editCategoryAdmin', verifyAdmin, editCategoryAdmin);
-router.delete('/deleteCategoryAdmin/:id', verifyAdmin, deleteCategoryAdmin);
-router.get('/getCategoriesForPanel', verifyAdmin, getCategoriesForPanel);
+router.get('/getAllCategories', verifyAuth, CategoryController.getAllCategories);
+router.post('/createCategory', verifyAdmin, CategoryController.createCategory);
+router.get('/getCategory/:id', verifyAuth, CategoryController.getCategory);
+router.delete('/deleteCategoryAdmin/:id', verifyAdmin, CategoryController.deleteCategoryAdmin);
+router.put('/editCategoryAdmin', verifyAdmin, CategoryController.editCategoryAdmin);
+router.get('/getCategoriesForPanel', verifyAdmin, CategoryController.getCategoriesForPanel);
 
 export default router;

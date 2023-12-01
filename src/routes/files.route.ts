@@ -4,7 +4,7 @@ import multer from 'multer';
 import path from "node:path";
 import storageAvatar from '../multer/avatar';
 import storageRecipe from '../multer/recipe';
-import { uploadAvatar, uploadRecipe } from '../controllers/files.controller';
+import FilesController from '../controllers/files.controller';
 
 const router = Router();
 
@@ -20,7 +20,7 @@ const fileFilterFn = (file: any, cb: any) => {
 const uploadMiddAvatar = multer({ storage: storageAvatar, limits: { fileSize: 5000000 }, fileFilter: (req, file, cb) => fileFilterFn(file, cb) }).single('image');
 const uploadMiddRecipe = multer({ storage: storageRecipe, limits: { fileSize: 5000000 }, fileFilter: (req, file, cb) => fileFilterFn(file, cb) }).single('image');
 
-router.post('/uploadAvatar/:id/:timestamp', uploadMiddAvatar, uploadAvatar);
-router.post('/uploadRecipe/:id/:timestamp', uploadMiddRecipe, uploadRecipe);
+router.post('/uploadAvatar/:id/:timestamp', uploadMiddAvatar, FilesController.uploadAvatar);
+router.post('/uploadRecipe/:id/:timestamp', uploadMiddRecipe, FilesController.uploadRecipe);
 
 export default router;
