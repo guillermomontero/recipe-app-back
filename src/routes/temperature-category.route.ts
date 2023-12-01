@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { verifyAuth, verifyAdmin } from '../middlewares/auth.middleware';
-import { createTemperatureCategory, deleteTemperatureCategoryAdmin, editTemperatureCategoryAdmin, getAllTemperatureCategories, getTemperatureCategory, getTemperatureCategoriesForPanel } from '../controllers/temperature-category.controller';
+import TemperatureCategoryController from '../controllers/temperature-category.controller';
 
 const router = Router();
 
-router.get('/getAllTemperatureCategories', verifyAuth, getAllTemperatureCategories);
-router.post('/createTemperatureCategory', verifyAdmin, createTemperatureCategory);
-router.get('/getTemperatureCategory/:id', verifyAuth, getTemperatureCategory);
-router.delete('/deleteTemperatureCategoryAdmin/:id', verifyAdmin, deleteTemperatureCategoryAdmin);
-router.put('/editTemperatureCategoryAdmin', verifyAdmin, editTemperatureCategoryAdmin);
-router.get('/getTemperatureCategoriesForPanel', verifyAdmin, getTemperatureCategoriesForPanel);
+router.get('/getAllTemperatureCategories', verifyAuth, TemperatureCategoryController.getAllTemperatureCategories);
+router.post('/createTemperatureCategory', verifyAdmin, TemperatureCategoryController.createTemperatureCategory);
+router.get('/getTemperatureCategory/:id', verifyAuth, TemperatureCategoryController.getTemperatureCategory);
+router.delete('/deleteTemperatureCategoryAdmin/:id', verifyAdmin, TemperatureCategoryController.deleteTemperatureCategoryAdmin);
+router.put('/editTemperatureCategoryAdmin', verifyAdmin, TemperatureCategoryController.editTemperatureCategoryAdmin);
+router.get('/getTemperatureCategoriesForPanel', verifyAdmin, TemperatureCategoryController.getTemperatureCategoriesForPanel);
 
 export default router;

@@ -3,3 +3,13 @@ declare namespace Express {
     userId: string
   }
 }
+
+export interface IUserMail {
+  name: string,
+  email: string
+};
+
+export interface IToken {
+  expiresIn: number,
+  token: string
+}
