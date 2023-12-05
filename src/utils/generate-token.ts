@@ -6,3 +6,10 @@ export const generateToken = (user: Object) => {
 
   return { token, expiresIn };
 }
+
+export const generateTokenVerify = (user: Object) => {
+  const expiresIn = '2h';
+  const token = jwt.sign({ data: user }, process.env.JWT_SECRET || '', { expiresIn });
+
+  return { token, expiresIn };
+}

@@ -5,8 +5,9 @@ import MailService from '../config/mailer';
 import { optionsWelcome } from '../config/mailer/options/welcome';
 import { optionsUserCancel } from '../config/mailer/options/user-cancel';
 import { optionsUserDelete } from '../config/mailer/options/user-delete';
-import { generateToken } from '../utils/generate-token';
+import { generateToken, generateTokenVerify } from '../utils/generate-token';
 import User from '../models/user.model';
+import { v4 as uuidv4 } from 'uuid';
 
 const saltRounds = 10;
 
@@ -29,15 +30,13 @@ export class UserController {
     payload.password = bcrypt.hashSync(req.body.password, saltRounds);
   
     try {
-      const userDB = new User(payload);
+      const verificationCode = uuidv4();
+      const userDB = new User({...payload, verificationCode });
       await userDB.save();
 
-      const dataToToken = {
-        _id: userDB._id,
-        name: userDB.name
-      };
+      const dataToToken = { _id: userDB._id, code: userDB.verificationCode };
   
-      const token = generateToken(dataToToken);
+      const token = generateTokenVerify(dataToToken);
   
       const options = optionsWelcome(userDB, token);
       await MailService.sendMail(options);

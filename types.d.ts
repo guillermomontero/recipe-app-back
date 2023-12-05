@@ -10,6 +10,6 @@ export interface IUserMail {
 };
 
 export interface IToken {
-  expiresIn: number,
+  expiresIn: number | string,
   token: string
 }

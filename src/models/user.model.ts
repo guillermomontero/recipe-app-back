@@ -8,6 +8,11 @@ enum Role {
   USER = 2
 }
 
+enum State {
+  VERIFIED = 1,
+  UNVERIFIED = 2
+}
+
 export class User {
   @prop({ required: [true, 'Name is required'], trim: true, maxlength: 50 })
   name: string
@@ -74,6 +79,12 @@ export class User {
 
   @prop({ default: true })
   active: boolean
+
+  @prop({ enum: State, default: 2, required: true })
+  state: State
+
+  @prop({ default: '' })
+  verificationCode: string
 };
 
 const UserModel = getModelForClass(User);

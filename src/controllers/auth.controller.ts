@@ -3,6 +3,14 @@ import bcrypt from 'bcrypt';
 import _ from 'underscore';
 import User from '../models/user.model';
 import { generateToken } from '../utils/generate-token';
+import jwt from 'jsonwebtoken';
+
+interface IPayload {
+  data: {
+    _id: string,
+    code: string
+  }
+}
 
 export class AuthController {
   static login = async (req: Request, res: Response) => {
@@ -50,6 +58,31 @@ export class AuthController {
       });
     };
   };
+
+  static verifyAccount = async (req: Request, res: Response) => {
+    const { token } = req.params;
+    const data = verifyToken(token);
+
+    // Verify if has data
+    if (!data) return res.status(404).json({ success: false, message: 'Token not valid' });
+
+    const { _id, code } = data.data;
+    const userDB = await User.findOne({ _id });
+
+    // Verify user exists
+    if (!userDB) return res.status(404).json({ success: false, message: 'User not find' });
+    // Verify code it´s equal to userDB code
+    if (code !== userDB.verificationCode) return res.redirect('http://localhost:8081/verify-account-error');
+
+    userDB.state = 1;
+    userDB.verificationCode = '';
+
+    // Save user
+    await userDB.save();
+
+    // Redirect to confirm account page
+    res.redirect('http://localhost:8081/verify-account');
+  };
 }
 
 const editLastSession = async (id: any) => {
@@ -59,6 +92,15 @@ const editLastSession = async (id: any) => {
   } catch (error) {
     return error;
   }
+};
+
+const verifyToken = (token: string) => {
+  if (!token) return false;
+
+  const payload = jwt.verify(token, process.env.JWT_SECRET || '') as IPayload;
+
+  if (payload) return payload;
+  return false;
 };
 
 export default AuthController;
